@@ -35,43 +35,43 @@
  */
 
 #ifndef NSIG
-#define NSIG 33
+#define NSIG	33
 #endif /* !NSIG */
 
 #ifndef RLIMIT_CPU
-#define RLIMIT_CPU 0		/* cpu time in milliseconds */
+#define RLIMIT_CPU	0
 #endif /* !RLIMIT_CPU */
 
 #ifndef RLIMIT_FSIZE
-#define RLIMIT_FSIZE 1		/* maximum file size */
+#define RLIMIT_FSIZE	1
 #endif /* !RLIMIT_FSIZE */
 
 #ifndef RLIMIT_DATA
-#define RLIMIT_DATA 2		/* data size */
+#define RLIMIT_DATA	2
 #endif /* !RLIMIT_DATA */
 
 #ifndef RLIMIT_STACK
-#define RLIMIT_STACK 3		/* stack size */
+#define RLIMIT_STACK	3
 #endif /* !RLIMIT_STACK */
 
 #ifndef RLIMIT_CORE
-#define RLIMIT_CORE 4		/* core file size */
+#define RLIMIT_CORE	4
 #endif /* !RLIMIT_CORE */
 
 #ifndef RLIMIT_RSS
-#define	RLIMIT_RSS 5		/* resident set size */
+#define RLIMIT_RSS	5
 #endif /* !RLIMIT_RSS */
 
 #ifndef RLIMIT_MEMLOCK
-#define	RLIMIT_MEMLOCK 6	/* locked-in-memory address space */
+#define RLIMIT_MEMLOCK	6
 #endif /* !RLIMIT_MEMLOCK */
 
 #ifndef RLIMIT_NPROC
-#define	RLIMIT_NPROC 7		/* number of processes */
+#define RLIMIT_NPROC	7
 #endif /* !RLIMIT_NPROC */
 
 #ifndef RLIMIT_NOFILE
-#define RLIMIT_NOFILE 8		/* number of open files */
+#define RLIMIT_NOFILE	8
 #endif /* !RLIMIT_NOFILE */
 
 /* Convert clock_gettime() to clock_get_time() on Max OS X */
