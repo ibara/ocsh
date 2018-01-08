@@ -38,6 +38,8 @@
 #define NSIG	33
 #endif /* !NSIG */
 
+/* Linux errors out with these */
+#ifndef __linux__
 #ifndef RLIMIT_CPU
 #define RLIMIT_CPU	0
 #endif /* !RLIMIT_CPU */
@@ -57,6 +59,7 @@
 #ifndef RLIMIT_CORE
 #define RLIMIT_CORE	4
 #endif /* !RLIMIT_CORE */
+#endif /* !__linux__ */
 
 #ifndef RLIMIT_RSS
 #define RLIMIT_RSS	5
@@ -66,6 +69,7 @@
 #define RLIMIT_MEMLOCK	6
 #endif /* !RLIMIT_MEMLOCK */
 
+#ifndef __linux__
 #ifndef RLIMIT_NPROC
 #define RLIMIT_NPROC	7
 #endif /* !RLIMIT_NPROC */
@@ -73,6 +77,7 @@
 #ifndef RLIMIT_NOFILE
 #define RLIMIT_NOFILE	8
 #endif /* !RLIMIT_NOFILE */
+#endif /* !__linux__ */
 
 /* Convert clock_gettime() to clock_get_time() on Max OS X */
 #ifdef __APPLE__
