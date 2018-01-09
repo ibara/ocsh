@@ -68,10 +68,42 @@ EOF
   fi
 }
 
+strnvischeck() {
+  cat << EOF > conftest.c
+#include <stdlib.h>
+#include <vis.h>
+int main(void){strnvis(NULL,NULL,0, 0);return 0;}
+EOF
+  $cc $tflags -o conftest conftest.c > /dev/null 2>&1
+  if [ $? -eq 0 ] ; then
+    rm -f conftest conftest.c
+    return 0
+  else
+    rm -f conftest conftest.c
+    return 1
+  fi
+}
+
 strtonumcheck() {
   cat << EOF > conftest.c
 #include <stdlib.h>
 int main(void){strtonum(NULL, 0, 0, NULL);return 0;}
+EOF
+  $cc $tflags -o conftest conftest.c > /dev/null 2>&1
+  if [ $? -eq 0 ] ; then
+    rm -f conftest conftest.c
+    return 0
+  else
+    rm -f conftest conftest.c
+    return 1
+  fi
+}
+
+vischeck() {
+  cat << EOF > conftest.c
+#include <stdlib.h>
+#include <vis.h>
+int main(void){vis(NULL,0,0, 0);return 0;}
 EOF
   $cc $tflags -o conftest conftest.c > /dev/null 2>&1
   if [ $? -eq 0 ] ; then
@@ -162,6 +194,15 @@ else
   echo "yes"
 fi
 
+printf "checking for strnvis... "
+strnvischeck
+if [ $? -ne 0 ] ; then
+  echo "#define NEED_STRNVIS" >> config.h
+  echo "no"
+else
+  echo "yes"
+fi
+
 printf "checking for strtonum... "
 strtonumcheck
 if [ $? -ne 0 ] ; then
@@ -175,6 +216,15 @@ printf "checking for sys_signame... "
 signamecheck
 if [ $? -ne 0 ] ; then
   echo "#define NEED_SIGNAME" >> config.h
+  echo "no"
+else
+  echo "yes"
+fi
+
+printf "checking for vis... "
+vischeck
+if [ $? -ne 0 ] ; then
+  echo "#define NEED_VIS" >> config.h
   echo "no"
 else
   echo "yes"

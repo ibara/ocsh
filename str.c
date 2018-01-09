@@ -39,7 +39,11 @@
 
 #include <sys/types.h>
 #include <stdarg.h>
+#if defined(NEED_STRNVIS) || defined(NEED_VIS)
+#include "vis.h"
+#else
 #include <vis.h>
+#endif
 
 #include "csh.h"
 #include "extern.h"

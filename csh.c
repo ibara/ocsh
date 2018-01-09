@@ -40,7 +40,11 @@
 #include <locale.h>
 #include <unistd.h>
 #include <limits.h>
+#if defined(NEED_STRNVIS) || defined(NEED_VIS)
+#include "vis.h"
+#else
 #include <vis.h>
+#endif
 #include <stdarg.h>
 
 #include "csh.h"
