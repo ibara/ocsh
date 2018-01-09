@@ -39,14 +39,15 @@
 
 #include <sys/types.h>
 #include <stdarg.h>
+
+#include "csh.h"
+#include "extern.h"
+
 #if defined(NEED_STRNVIS) || defined(NEED_VIS)
 #include "vis.h"
 #else
 #include <vis.h>
 #endif
-
-#include "csh.h"
-#include "extern.h"
 
 Char  **
 blk2short(char **src)
