@@ -84,7 +84,7 @@ bool    tellwhat = 0;
 extern char **environ;
 
 static int	readf(void *, char *, int);
-static fpos_t	seekf(void *, fpos_t, int);
+static off_t	seekf(void *, off_t, int);
 static int	writef(void *, const char *, int);
 static int	closef(void *);
 static int	srccat(Char *, Char *);
@@ -155,11 +155,13 @@ main(int argc, char *argv[])
     if (loginsh)
 	(void) time(&chktim);
 
+#ifdef HAVE_PLEDGE
     if (pledge("stdio rpath wpath cpath fattr getpw proc exec tty",
 	NULL) == -1) {
 	    perror("pledge");
 	    exit(1);
     }
+#endif
 
     /*
      * Move the descriptors to safe places. The variable didfds is 0 while we
@@ -1202,8 +1204,8 @@ writef(void *oreo, const char *buf, int siz)
     return write(DESC(oreo), buf, siz);
 }
 
-static fpos_t
-seekf(void *oreo, fpos_t off, int whence)
+static off_t
+seekf(void *oreo, off_t off, int whence)
 {
     return lseek(DESC(oreo), off, whence);
 }
