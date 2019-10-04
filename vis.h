@@ -37,7 +37,7 @@
 
 #include "config.h"
 
-#if defined(NEED_STRNVIS) || defined(NEED_VIS)
+#if !defined(HAVE_STRNVIS) || !defined(HAVE_VIS)
 
 /*
  * to select alternate encoding format
@@ -91,6 +91,6 @@ int	unvis(char *, char, int *, int);
 ssize_t strnunvis(char *, const char *, size_t)
 		__attribute__ ((__bounded__(__string__,1,3)));
 
-#endif /* NEED_STRNVIS || NEED_VIS */
+#endif /* !HAVE_STRNVIS || !HAVE_VIS */
 
 #endif /* !_VIS_H_ */

@@ -1,5 +1,1 @@
-#define NEED_REALLOCARRAY
-#define NEED_SIGNAME
-#define NEED_STRNVIS
-#define NEED_STRTONUM
-#define NEED_VIS
+/* This file intentionally left blank.  */

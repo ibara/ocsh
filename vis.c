@@ -30,7 +30,7 @@
 
 #include "config.h"
 
-#if defined(NEED_STRNVIS) || defined(NEED_VIS)
+#if !defined(HAVE_STRNVIS) || !defined(HAVE_VIS)
 
 #include <sys/types.h>
 #include <errno.h>
@@ -198,4 +198,4 @@ strnvis(char *dst, const char *src, size_t siz, int flag)
 	return (dst - start);
 }
 
-#endif /* NEED_STRNVIS || NEED_VIS */
+#endif /* !HAVE_STRNVIS || !HAVE_VIS */

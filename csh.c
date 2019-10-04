@@ -1,4 +1,4 @@
-/*	$OpenBSD: csh.c,v 1.43 2017/12/16 10:27:21 anton Exp $	*/
+/*	$OpenBSD: csh.c,v 1.46 2019/06/28 13:34:58 deraadt Exp $	*/
 /*	$NetBSD: csh.c,v 1.14 1995/04/29 23:21:28 mycroft Exp $	*/
 
 /*-
@@ -47,7 +47,7 @@
 #include "extern.h"
 #include "pathnames.h"
 
-#if defined(NEED_STRNVIS) || defined(NEED_VIS)
+#if !defined(HAVE_STRNVIS) || !defined(HAVE_VIS)
 #include "vis.h"
 #else
 #include <vis.h>
@@ -348,7 +348,7 @@ main(int argc, char *argv[])
      */
     if (nofile == 0 && argc > 0) {
 	nofile = open(tempv[0], O_RDONLY);
-	if (nofile < 0) {
+	if (nofile == -1) {
 	    child = 1;		/* So this doesn't return */
 	    stderror(ERR_SYSTEM, tempv[0], strerror(errno));
 	}
@@ -583,7 +583,7 @@ importpath(Char *cp)
      * i+2 where i is the number of colons in the path. There are i+1
      * directories in the path plus we need room for a zero terminator.
      */
-    pv = (Char **) xcalloc((size_t) (i + 2), sizeof(Char **));
+    pv = xcalloc(i + 2, sizeof(*pv));
     dp = cp;
     i = 0;
     if (*dp)
@@ -667,7 +667,7 @@ srcunit(int unit, bool onlyown, bool hflg)
     if (onlyown) {
 	struct stat stb;
 
-	if (fstat(unit, &stb) < 0) {
+	if (fstat(unit, &stb) == -1) {
 	    (void) close(unit);
 	    return;
 	}
@@ -890,7 +890,6 @@ pintr(int notused)
 void
 pintr1(bool wantnl)
 {
-    Char **v;
     sigset_t sigset, osigset;
 
     sigemptyset(&sigset);
@@ -919,10 +918,10 @@ pintr1(bool wantnl)
     if (gointr) {
 	gotolab(gointr);
 	timflg = 0;
-	if ((v = pargv) != NULL)
-	    pargv = 0, blkfree(v);
-	if ((v = gargv) != NULL)
-	    gargv = 0, blkfree(v);
+	blkfree(pargv);
+	pargv = NULL;
+	blkfree(gargv);
+	gargv = NULL;
 	reset();
     }
     else if (intty && wantnl) {
@@ -1133,7 +1132,7 @@ mailchk(void)
     if (chktim + intvl > t)
 	return;
     for (; *vp; vp++) {
-	if (stat(short2str(*vp), &stb) < 0)
+	if (stat(short2str(*vp), &stb) == -1)
 	    continue;
 	new = stb.st_mtime > time0.tv_sec;
 	if (stb.st_size == 0 || stb.st_atime > stb.st_mtime ||

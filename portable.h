@@ -118,21 +118,21 @@
  * Prototypes
  */
 
-#ifdef NEED_REALLOCARRAY
+#ifndef HAVE_REALLOCARRAY
 void	 *reallocarray(void *, size_t, size_t);
-#endif /* NEED_REALLOCARRAY */
+#endif /* HAVE_REALLOCARRAY */
 
-#ifdef NEED_STRTONUM
+#ifndef HAVE_STRTONUM
 long long strtonum(const char *numstr, long long minval, long long maxval,
 		   const char **errstrp);
-#endif /* NEED_STRTONUM */
+#endif /* HAVE_STRTONUM */
 
 /*
  * Externs
  */
 
-#ifdef NEED_SIGNAME
+#ifndef HAVE_SIGNAME
 extern const char *const sys_signame[NSIG];
-#endif /* NEED_SIGNAME */
+#endif /* HAVE_SIGNAME */
 
 #endif /* !_OCSH_PORTABLE_H_ */
